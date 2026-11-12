@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.math.BigDecimal;      // type pour les montants
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity                       // JPA : "cette classe = une table"
@@ -13,6 +17,7 @@ import java.math.BigDecimal;      // type pour les montants
 @Setter                       // Lombok : génère setMarque(…), setStatut(…)…
 @NoArgsConstructor            // Lombok : génère  public Vehicule() {}
 @AllArgsConstructor           // Lombok : génère  public Vehicule(Long id, String immat, …)
+
 
 public class Vehicule {
     @Id
@@ -32,4 +37,14 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Agence agence;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "vehicule_equipement")
+    private Set<Equipement> equipements = new HashSet<>();
+
+    @OneToMany(mappedBy = "vehicule", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Maintenance> maintenances = new ArrayList<>();
 }

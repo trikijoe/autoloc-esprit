@@ -1,11 +1,12 @@
 package tn.esprit.autolocapi.domain;
 
-import java.time.LocalDate;   // à ajouter aux imports
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.time.LocalDate;   // à ajouter aux imports
+
 
 @Entity
 @Table( name = "maintenance")
@@ -27,4 +28,7 @@ public class Maintenance {
 
     @Column(length = 500)
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Vehicule vehicule;
 }
