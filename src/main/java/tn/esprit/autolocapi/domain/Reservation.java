@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.time.LocalDate;
 import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;             // ← AJOUT
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;   // ← AJOUT
+
 @Entity
 @Table(name = "reservation")
 @Getter
@@ -37,5 +40,6 @@ public class Reservation {
     private Vehicule vehicule;
 
     @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Contrat contrat;
 }

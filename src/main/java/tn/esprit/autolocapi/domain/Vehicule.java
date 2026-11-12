@@ -1,4 +1,6 @@
 package tn.esprit.autolocapi.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;     // les annotations JPA (@Entity, @Id, @Column…)
 import lombok.AllArgsConstructor; // les annotations Lombok
 import lombok.Getter;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 @Entity                       // JPA : "cette classe = une table"
 @Table(name = "vehicule")     // JPA : nom de la table en base
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // ← AJOUT
 @Getter                       // Lombok : génère getIdVehicule(), getMarque()…
 @Setter                       // Lombok : génère setMarque(…), setStatut(…)…
 @NoArgsConstructor            // Lombok : génère  public Vehicule() {}
@@ -46,5 +49,6 @@ public class Vehicule {
     private Set<Equipement> equipements = new HashSet<>();
 
     @OneToMany(mappedBy = "vehicule", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Maintenance> maintenances = new ArrayList<>();
 }
